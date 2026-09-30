@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About | WorkRedesign.sg</title>
+<meta name="description" content="How WorkRedesign.sg works, and the job-redesign framework behind it." />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="hero">
+  <div class="container">
+    <span class="step-pill">About</span>
+    <h1>Why this tool exists</h1>
+    <p class="lead">Most hirers don't skip job redesign on purpose — they've just never had a reason to
+    look at a role task-by-task. This tool exists to create that moment, then connect what comes out of
+    it to funding and to people.</p>
+  </div>
+</section>
+
+<main>
+  <div class="container">
+
+    <div class="section">
+      <div class="card">
+        <h2>The problem this solves</h2>
+        <p>Automation and AI adoption are changing what jobs look like across Singapore SMEs — but buying
+        a tool without redesigning the job around it is one of the most common reasons digitalisation
+        spend fails to show up as productivity. The fix isn't more software. It's looking at the job
+        itself first: which tasks should be dropped, which can be automated, and which genuinely need a
+        person's judgement or relationships.</p>
+        <p class="mb-0">Once that's clear, many roles turn out not to need a full-time hire at all —
+        they fit a fractional, job-share, or project-based arrangement instead, often filled well by an
+        experienced mid-career PMET.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <h2>The five stages</h2>
+        <table class="task-table">
+          <thead><tr><th>Stage</th><th>What happens</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Awareness</strong></td><td>A 2-minute check on whether a specific role shows real redesign signals.</td></tr>
+            <tr><td><strong>2. Education</strong></td><td>A guided worksheet to break the role into its actual tasks.</td></tr>
+            <tr><td><strong>3. Execution</strong></td><td>Each task is classified — eliminate, automate, augment, or elevate — and the leftover work is matched to an arrangement type.</td></tr>
+            <tr><td><strong>4. Grant mapping</strong></td><td>The redesign (and the resulting hire) is matched to the Singapore government schemes that can fund it, with a readiness checklist for each.</td></tr>
+            <tr><td><strong>5. Match</strong></td><td>A request goes to our team, who match it against vetted mid-career PMETs looking for exactly this kind of role.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <h2>Who's behind this</h2>
+        <p class="mb-0" id="orgBlurb"></p>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/layout.js"></script>
+<script>
+  renderHeader("about");
+  renderFooter();
+  document.getElementById("orgBlurb").textContent =
+    SITE.orgName + " is a social enterprise helping mid-career PMETs access fractional, project-based, and job-share work — and helping Singapore SMEs see where that talent actually fits.";
+</script>
+</body>
+</html>
