@@ -24,4 +24,4 @@ if (typeof window.supabase === "undefined" || !window.supabase.createClient) {
   throw new Error("window.supabase is not available — Supabase CDN script failed to load");
 }
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+window.supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
