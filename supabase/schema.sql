@@ -142,12 +142,20 @@ create trigger protect_role_fields_trigger
 -- ------------------------------------------------------------
 -- Helper functions used throughout RLS policies below
 -- ------------------------------------------------------------
+-- SECURITY DEFINER is required here, not optional: these functions are
+-- called from inside RLS policies ON public.profiles itself (via is_staff(),
+-- etc.). Without SECURITY DEFINER they run as the invoking (RLS-restricted)
+-- user, so their own "select ... from public.profiles" re-triggers the very
+-- policy that's calling them — infinite recursion, surfaced by Postgres as
+-- "stack depth limit exceeded". SECURITY DEFINER runs them as the function
+-- owner (the superuser that ran this schema), which bypasses RLS and breaks
+-- the loop, exactly like handle_new_user() and protect_role_fields() above.
 create or replace function public.current_account_type()
-returns account_type language sql stable
+returns account_type language sql stable security definer set search_path = public
 as $$ select account_type from public.profiles where id = auth.uid() $$;
 
 create or replace function public.current_staff_role()
-returns staff_role language sql stable
+returns staff_role language sql stable security definer set search_path = public
 as $$ select staff_role from public.profiles where id = auth.uid() $$;
 
 create or replace function public.is_staff()
@@ -171,7 +179,7 @@ returns boolean language sql stable
 as $$ select public.current_staff_role() in ('super_admin', 'approver') $$;
 
 create or replace function public.current_hirer_status()
-returns hirer_status language sql stable
+returns hirer_status language sql stable security definer set search_path = public
 as $$ select hirer_status from public.profiles where id = auth.uid() $$;
 
 -- Note: has_approved_intro() is defined further below, immediately
@@ -251,7 +259,7 @@ create table public.intro_requests (
 
 -- Now that intro_requests exists, define the helper that checks it.
 create or replace function public.has_approved_intro(p_talent_profile_id uuid)
-returns boolean language sql stable
+returns boolean language sql stable security definer set search_path = public
 as $$
   select exists (
     select 1 from public.intro_requests
@@ -624,5 +632,8 @@ create index idx_audit_log_target on public.audit_log (target_table, target_id);
 --
 -- Do this directly in the Supabase SQL editor — it runs as the
 -- service role, so it bypasses the protect_role_fields_trigger
+-- restriction that blocks self-escalation from the app.
+-- ============================================================
+
 -- restriction that blocks self-escalation from the app.
 -- ============================================================
